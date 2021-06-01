@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/script.js" defer type="module"></script>
+    
+    <title>1er Parcial</title>
+</head>
+<body>
+    <header>
+        <img src="./img/logo.jpg" width="100" height="100" alt="logo" class="logo">
+        <nav>
+            <ul>
+                <li><a href="#">Nosotros</a></li>
+                <li><a href="#">Anuncios</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="header">
+        <h1>Administracion</h1>
+        <div class="header-background">
+            <!-- <img src="./img/Elite-Cars.jfif" alt="elite-cars"> -->
+        </div>
+    </section>
+    <div id="spinner-container">
+        <img src="./img/spinner2.gif" id="spinner" alt="spinner">
+    </div>
+    <section class="main-section">
+        <div class="main-container">
+            <div class="container" id="div-form">
+                <form id="form-anuncio">
+                    <fieldset>
+                        <legend>Información del Anuncio</legend>
+                        <div class="form-group">
+                            <label for="titulo">TITULO:</label>
+                            <input type="hidden" name="id" id="id-anuncio">
+                            <input type="text" name="titulo" id="titulo" placeholder="Titulo" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label for="transaccion">transaccion:</label>
+                            <label for="transaccion-venta">venta</label>
+                            <input type="radio" name="transaccion" id="transaccion-venta" value="venta" required="required">
+                            <label for="transaccion-alquiler">alquiler</label>
+                            <input type="radio" name="transaccion" id="transaccion-alquiler" value="alquiler">
+                        </div>
+                        <div class="form-group">
+                            <label for="descripcion">descripcion:</label>
+                            <input type="text" name="descripcion" id="descripcion" placeholder="Descripción" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label for="precio">precio:</label>
+                            <input type="text" name="precio" id="precio" placeholder="Precio" required="required">
+                        </div>
+                        <div class="flex">
+                            <div class="form-group flex-item">
+                                <i class="fa fa-automobile"></i>
+                                <input type="text" name="puertas" id="puertas" placeholder="Puertas" required="required">
+                            </div>
+                            <div class="form-group flex-item">
+                                <i class="fa fa-asterisk"></i>
+                                <input type="text" name="kms" id="kms" placeholder="kms" required="required">
+                            </div>
+                            <div class="form-group flex-item">
+                                <i class="fa fa-area-chart"></i>
+                                <input type="text" name="potencia" id="potencia" placeholder="Potencia" required="required">
+                            </div>
+                        </div>
+                        <div class="form-group cont-center">
+                            <input type="submit" value="Guardar" class="btn btn-guardar" id="btn-guardar">
+                            <button type="button" class="btn btn-nuevo" id="btn-nuevo">Nuevo</button>
+                            <button type="button" class="btn btn-borrar" id="btn-borrar">Borrar</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="container" id="div-tabla-anuncios"></div>
+        </div>
+    </section>
+    <section class="footer">
+        <nav>
+            <ul>
+                <li><a href="#">Nosotros</a></li>
+                <li><a href="#">Anuncios</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
+        <p>Todos los derechos reservados 2019 &#169;</p>
+    </section>
+</body>
+</html>
