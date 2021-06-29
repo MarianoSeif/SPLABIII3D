@@ -265,3 +265,23 @@ footer p {
     display: inline-block;
     height: 200px;
 }
+
+
+/* SP */
+
+.inline {
+    display:inline;
+}
+
+input[type="checkbox"]
+{
+    vertical-align:middle;
+}
+
+#div-checkboxs {
+    display: flex;
+}
+
+#div-filtro {
+    margin-top: 20px;
+}

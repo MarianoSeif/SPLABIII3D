@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./css/style.css">
     <script src="./js/script.js" defer type="module"></script>
     
-    <title>1er Parcial</title>
+    <title>2do Parcial</title>
 </head>
 <body>
     <header>
@@ -80,6 +81,41 @@
                     </fieldset>
                 </form>
             </div>
+
+            <hr>
+            <div id="div-filtro">
+                <div class="row">
+                    <div class="col md-6">
+                        <label class="inline" for="select-transaccion">FILTRAR POR</label>
+                        <select name="select-transaccion" id="select-transaccion">
+                            <option value="todos" selected>Todos</option>
+                            <option value="venta">Venta</option>
+                            <option value="alquiler">Alquiler</option>
+                        </select>
+                    </div>
+                    <div class="col md-6">
+                        <label class="inline" for="input-promedio">PROMEDIO DE PRECIOS</label>
+                        <input type="text" name="input-promedio" id="input-promedio" readonly>
+                    </div>
+                </div>
+                
+            </div>
+            <div id="div-checkboxs">
+                <label class="inline" for="chk-titulo">TITULO</label>
+                <input type="checkbox" class="check-cols"name="chk-titulo" id="chk-titulo" value="titulo" checked />
+                <label class="inline" for="chk-transaccion">TRANSACCION</label>
+                <input type="checkbox" class="check-cols"name="chk-transaccion" id="chk-transaccion" value="transaccion" checked>
+                <label class="inline" for="chk-descripcion">DESCRICPCION</label>
+                <input type="checkbox" class="check-cols"name="chk-descripcion" id="chk-descripcion" value="descripcion" checked>
+                <label class="inline" for="chk-precio">PRECIO</label>
+                <input type="checkbox" class="check-cols"name="chk-precio" id="chk-precio" value="precio" checked>
+                <label class="inline" for="chk-baños">BAÑOS</label>
+                <input type="checkbox" class="check-cols"name="chk-baños" id="chk-baños" value="num_puertas" checked>
+                <label class="inline" for="chk-autos">AUTOS</label>
+                <input type="checkbox" class="check-cols"name="chk-autos" id="chk-autos" value="num_KMs" checked>
+                <label class="inline" for="chk-dormis">DORMIS</label>
+                <input type="checkbox" class="check-cols"name="chk-dormis" id="chk-dormis" value="potencia" checked>
+            </div>
             <div class="container" id="div-tabla-anuncios"></div>
         </div>
     </section>
@@ -92,7 +128,7 @@
                 <li><a href="#">Contacto</a></li>
             </ul>
         </nav>
-        <p>Todos los derechos reservados 2019 &#169;</p>
+        <p>Todos los derechos reservados 2021 &#169;</p>
     </section>
 </body>
 </html>

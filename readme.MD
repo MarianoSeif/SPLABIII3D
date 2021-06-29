@@ -1,4 +1,4 @@
-# Primer Parcial Laboratorio III
+# Segundo Parcial Laboratorio III
 
 ### Nombre: Mariano Seif
 ### Legajo: 110070

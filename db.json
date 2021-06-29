@@ -1,0 +1,7 @@
+{
+    "anuncios": [
+        {"id":2,"titulo":"qwe","transaccion":"alquiler","descripcion":"qwe","precio":"2","num_puertas":"2","num_KMs":"2","potencia":"2"},
+        {"id":3,"titulo":"wwww","transaccion":"venta","descripcion":"wwww","precio":"10","num_puertas":"2","num_KMs":"2","potencia":"2"},
+        {"id":4,"titulo":"rrr","transaccion":"alquiler","descripcion":"rrr","precio":"5","num_puertas":"2","num_KMs":"2","potencia":"2"}
+    ]
+}

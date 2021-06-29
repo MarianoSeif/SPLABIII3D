@@ -1,11 +1,17 @@
 import {Anuncio_Auto} from './anuncio_auto.js'
 
+
+//json-server -w -d 1000 db.json
+
 window.scrollTo({ top: 0, behavior: 'smooth' });
 document.getElementById('spinner-container').style.display = 'none';
 document.getElementById('div-tabla-anuncios').style.display = 'none';
 
+document.getElementById('input-promedio').value = 'N/A';
+
 //Cargar datos
-const lista = leerDatosLocalStorage('lista') || [];
+const lista = cargarDatos();
+//const lista = cargarDatosAsync();
 
 //Cargar Tabla
 iniciarTabla();
@@ -16,15 +22,48 @@ document.getElementById('form-anuncio').addEventListener('submit', submitHandler
 document.getElementById('tabla-anuncios').addEventListener('click', tableClickHandler);
 document.getElementById('btn-nuevo').addEventListener('click', limpiarFormulario);
 document.getElementById('btn-borrar').addEventListener('click', deleteHandler);
+document.getElementById('select-transaccion').addEventListener('change', filtrarDatos);
+const checkboxs = document.getElementsByClassName('check-cols');
+for(let i=0; i<checkboxs.length; i++){
+    checkboxs[i].addEventListener('change', toggleColumns2);
+}
+
+
+function filtrarDatos(e){
+    let transaccion = e.target.value;
+    let datosFiltrados;
+    switch (transaccion) {
+        case 'todos':
+            borrarTabla();
+            dibujarTabla(lista);
+            document.getElementById('input-promedio').value = 'N/A';
+            break;
+        case 'venta':
+            borrarTabla();
+            datosFiltrados = lista.filter(anuncio => anuncio.transaccion == 'venta');
+            dibujarTabla(datosFiltrados);
+            calcularPromedioDePrecios(datosFiltrados);
+            break;
+        case 'alquiler':
+            borrarTabla();
+            datosFiltrados = lista.filter(anuncio => anuncio.transaccion == 'alquiler');
+            dibujarTabla(datosFiltrados);
+            calcularPromedioDePrecios(datosFiltrados);
+            break;
+        default:
+            break;
+    }
+}
 
 
 function crearTabla(data){
     const $tabla = document.createElement('table');
+    $tabla.className += "table table-dark";
     $tabla.id = 'tabla-anuncios';
     $tabla.className = 'table';
     
     const $thead = document.createElement('thead');
-    const encabezados = Object.keys(new Anuncio_Auto());
+    const encabezados = Object.keys(data[0]);
     encabezados.forEach(element => {
         const $th = document.createElement('th');
         $th.innerText = element;
@@ -73,6 +112,7 @@ function submitHandler(e){
         lista.push(anuncio);
         insertarObjetoEnTabla(anuncio);
         guardarDatosLocalStorage(lista, 'lista');
+        postDatosAsync(anuncio);
         form.reset();
         document.getElementById('tabla-anuncios').scrollIntoView({behavior: "smooth", block: "start"});
         alert('El aviso se agregó con éxito');
@@ -115,6 +155,7 @@ function submitHandler(e){
         document.getElementById('tabla-anuncios').scrollIntoView({behavior: "smooth", block: "start"});
         alert('El aviso se modificó con éxito');
     }
+    calcularPromedioDePrecios(lista);
     limpiarFormulario();
 }
 
@@ -189,6 +230,7 @@ function deleteHandler(){
         }
         guardarDatosLocalStorage(lista, 'lista');
         limpiarFormulario();
+        calcularPromedioDePrecios(lista);
         document.getElementById('tabla-anuncios').scrollIntoView({behavior: "smooth", block: "start"});
         alert('El aviso se eliminó con éxito');
     }
@@ -196,11 +238,14 @@ function deleteHandler(){
 
 
 function iniciarTabla() {
-    toggleSpinner();
+    spinAndWait();
     document.getElementById('div-tabla-anuncios').appendChild(crearTabla(lista));
-    setTimeout(toggleSpinner, 3000);
 }
 
+function spinAndWait(){
+    toggleSpinner();
+    setTimeout(toggleSpinner, 1000);
+}
 
 function toggleSpinner(){
     const div = document.getElementById('spinner-container');
@@ -213,5 +258,100 @@ function toggleSpinner(){
     else {
         div.style.display = 'none';
         divAnuncios.style.display = 'block';
+    }
+}
+
+function cargarDatos(){
+    return leerDatosLocalStorage('lista') || [];
+}
+
+function borrarTabla(){
+    const divAnuncios = document.getElementById('div-tabla-anuncios');
+    while(divAnuncios.hasChildNodes()){
+        divAnuncios.removeChild(divAnuncios.firstChild);
+    }
+}
+
+function dibujarTabla(datos){
+    spinAndWait();
+    document.getElementById('div-tabla-anuncios').appendChild(crearTabla(datos));
+}
+
+function calcularPromedioDePrecios(datos){
+    let promedio = datos.reduce((suma, anuncio)=> (suma + parseFloat(anuncio.precio)), 0) / datos.length;
+    document.getElementById('input-promedio').value = promedio.toFixed(2);
+}
+
+function toggleColumns(e) {
+    let atributo = e.target.value;
+    if(!e.target.checked){
+        const tablaMapeada = lista.map( (anuncio)=> {
+            delete anuncio[atributo];
+            return anuncio;
+        });
+        borrarTabla();
+        dibujarTabla(tablaMapeada);
+    }
+}
+
+function toggleColumns2(e) {
+    let tablaMapeada = cargarDatos();
+    const checkboxs = document.getElementsByClassName('check-cols');
+    for (const checkbox of checkboxs) {
+        if(!checkbox.checked){
+            tablaMapeada = tablaMapeada.map( (anuncio)=> {
+                delete anuncio[checkbox.value];
+                return anuncio;
+            });
+        }
+        borrarTabla();
+        dibujarTabla(tablaMapeada);
+    }
+}
+
+const postDatosAsync = async(dato)=>{
+    toggleSpinner();
+    
+    const options = {
+        method: "POST",
+        headers: {
+            "Content-type":"application/json;charset=utf-8"
+        },
+        body: JSON.stringify(dato)
+    }
+
+    try {
+        const res = await fetch('http://localhost:3000/anuncios', options);
+        if(!res.ok){
+            throw {
+                error: res.status,
+                statusText: res.statusText
+            };
+        }
+        const data = await res.json();
+        console.log(data);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function cargarDatosAsync(){
+    toggleSpinner();
+    try {
+        const res = await fetch('http://localhost:3000/anuncios');
+        if(!res.ok){
+            throw {
+                error: res.status,
+                statusText: res.statusText
+            };
+        }
+        const data = await res.json();
+        document.getElementById('div-tabla-anuncios').appendChild(crearTabla(data));
+        document.getElementById('tabla-anuncios').addEventListener('click', tableClickHandler);
+        lista = data;
+    } catch (error) {
+        console.log(error);
+    }finally{
+        toggleSpinner();
     }
 }
